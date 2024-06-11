@@ -11,6 +11,8 @@ import { v4 as uuidv4 } from "uuid";
 import { LoggerStep, STEP_OPTIONS } from "@/components/Logger/config";
 import { load, store } from "@/helpers/storage";
 import { Tag } from "./useTags";
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Add this import
+
 
 export const STORAGE_KEY = "PIXEL_TRACKER_SETTINGS";
 
@@ -131,22 +133,22 @@ function SettingsProvider({ children }: { children: React.ReactNode }) {
     }
   }, [JSON.stringify(settings)]);
 
-  const addActionDone = useCallback((actionTitle: IAction["title"]) => {
-    if (hasActionDone(actionTitle)) {
-      return;
-    }
+  // const addActionDone = useCallback((actionTitle: IAction["title"]) => {
+  //   if (hasActionDone(actionTitle)) {
+  //     return;
+  //   }
 
-    setSettings((settings) => ({
-      ...settings,
-      actionsDone: [
-        ...settings.actionsDone,
-        {
-          title: actionTitle,
-          date: new Date().toISOString(),
-        },
-      ],
-    }));
-  }, [settings.actionsDone]);
+  //   setSettings((settings) => ({
+  //     ...settings,
+  //     actionsDone: [
+  //       ...settings.actionsDone,
+  //       {
+  //         title: actionTitle,
+  //         date: new Date().toISOString(),
+  //       },
+  //     ],
+  //   }));
+  // }, [settings.actionsDone]);
 
   const removeActionDone = useCallback((actionTitle: IAction["title"]) => {
     setSettings((settings) => ({
@@ -165,6 +167,30 @@ function SettingsProvider({ children }: { children: React.ReactNode }) {
     },
     [settings.actionsDone]
   );
+
+
+const addActionDone = useCallback(async (actionTitle: IAction["title"]) => {
+  if (hasActionDone(actionTitle)) {
+    return;
+  }
+
+  const updatedActionsDone = [
+    ...settings.actionsDone,
+    {
+      title: actionTitle,
+      date: new Date().toISOString(),
+    },
+  ];
+
+  setSettings((settings) => ({
+    ...settings,
+    actionsDone: updatedActionsDone,
+  }));
+
+  if (actionTitle === 'onboarding') {
+    await AsyncStorage.setItem('onboardingCompleted', 'true');
+  }
+}, [settings.actionsDone, hasActionDone]);
 
   const toggleStep = useCallback((step: LoggerStep, value: Boolean) => {
     setSettings((settings) => {

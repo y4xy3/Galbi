@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import useCachedResources from '@/hooks/useCachedResources';
 import Navigation from '@/navigation';
-
+import WelcomeSlide from './src/screens/Onboarding/WelcomeSlide';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export default function App() {
@@ -12,8 +12,12 @@ export default function App() {
   } else {
     return (
       <GestureHandlerRootView style={{ flex: 1 }}>
+        
         <Navigation />
         <StatusBar />
+
+      {/* <WelcomeSlide navigation={navigator}/> // Index 0 */}
+
       </GestureHandlerRootView>
     );
   }

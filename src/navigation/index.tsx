@@ -40,7 +40,9 @@ import { BackButton } from './BackButton';
 import { BottomTabs } from './BottomTabs';
 import { BotLoggerEmotions } from '@/screens/BotLogger/Emotions';
 import { BotLoggerTags } from '@/screens/BotLogger/Tags';
-
+import SubscriptionSlide from '../screens/Onboarding/SubscriptionSlide';
+import WelcomeSlide from '../screens/Onboarding/WelcomeSlide';
+import { IndexSlide } from '../screens/Onboarding/IndexSlide';
 enableScreens();
 
 const NAVIGATION_LINKING = {
@@ -175,12 +177,16 @@ function RootNavigator() {
         backgroundColor: colors.background,
       }}
     >
+
+     
       <Stack.Navigator
         initialRouteName="tabs"
         screenOptions={{
           navigationBarColor: colors.tabsBackground,
         }}
       >
+        {/* <Stack.Screen name="Onboarding" component={Onboarding} /> */}
+        
         <Stack.Screen
           name="tabs"
           component={BottomTabs}
@@ -286,6 +292,10 @@ function RootNavigator() {
             name="Onboarding"
             component={Onboarding}
           />
+        {/* <Stack.Screen name="IndexSlide" component={IndexSlide}  />
+        <Stack.Screen name="Welcome" component={WelcomeSlide} /> */}
+
+
         </Stack.Group>
 
         <Stack.Group
@@ -371,6 +381,16 @@ function RootNavigator() {
               ...defaultPageOptions,
             }}
           />
+          <Stack.Screen
+            name="SubscriptionSlide"
+            component={SubscriptionSlide}
+            options={{
+              title: t('SubscriptionSlide'),
+              ...defaultPageOptions,
+            }}
+          />
+
+
           <Stack.Screen
             name="Licenses"
             component={LicensesScreen}

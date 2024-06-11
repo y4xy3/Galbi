@@ -14,8 +14,11 @@ declare global {
 export type AtLeast<T, K extends keyof T> = Partial<T> & Pick<T, K>;
 
 export type RootStackParamList = {
+  IndexSlide: undefined;
+  Welcome: undefined;
   tabs: undefined;
   Onboarding: undefined;
+  SubscriptionSlide: undefined; 
   Settings: undefined;
   Colors: undefined;
   Licenses: undefined;
@@ -25,6 +28,7 @@ export type RootStackParamList = {
   Reminder: undefined;
   Privacy: undefined;
   Steps: undefined;
+  NextScreen: undefined; 
   // PasscodeLocked: undefined;
   Tags: undefined;
   DevelopmentTools: undefined;

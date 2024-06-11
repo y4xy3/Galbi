@@ -38,8 +38,15 @@ function AnalyticsProvider({
 
   const [isIdentified, setIsIdentified] = useState(false);
   const [isEnabled, setIsEnabled] = useState(settings.analyticsEnabled);
+  const analytics = useAnalytics()
 
   useEffect(() => setIsEnabled(settings.analyticsEnabled), [settings.analyticsEnabled])
+
+  useEffect(() => {
+    if (isEnabled && settings.deviceId !== null && !isIdentified && analytics) {
+      identify();
+    }
+  }, [isEnabled, settings.deviceId, isIdentified, analytics]);
 
   const identify = (properties?: any) => {
     const traits = {
@@ -108,7 +115,7 @@ function AnalyticsProvider({
 
       if (!options.enabled) return;
 
-      posthog!.capture(eventName, {
+      posthog?.capture(eventName, {
         ...properties,
         userId: settings.deviceId,
       });

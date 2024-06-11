@@ -713,5 +713,8 @@
   "bot_question_custom_feedback_text": "Awesome, almost done. \n\nDo you want to add any feedback? May I can do something better?",
   "bot_question_custom_feedback_answer_text": "I want to add: {{text}}",
   "bot_question_custom_feedback_answer_empty": "I don't want to add feedback",
-  "bot_question_custom_feedback_response": "Thank you so much for your feedback, I will send it to my developer."
+  "bot_question_custom_feedback_response": "Thank you so much for your feedback, I will send it to my developer.",
+  "premium": "Premium",
+  "SubscriptionSlide": "Subscription Slide"
+
 }

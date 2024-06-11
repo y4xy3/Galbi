@@ -1,3 +1,4 @@
+import React from 'react';
 import { Text, View } from 'react-native';
 import Button from '@/components/Button';
 import useColors from '../../hooks/useColors';
@@ -7,16 +8,10 @@ import Animated, { FadeIn } from 'react-native-reanimated';
 import { t } from '@/helpers/translation';
 
 const Body = ({ index }: { index: number }) => {
-  const colors = useColors()
+  const colors = useColors();
 
   return (
-    <View
-      style={{
-        flex: 1,
-        paddingVertical: 32,
-        paddingHorizontal: 32,
-      }}
-    >
+    <View style={{ flex: 1, paddingVertical: 32, paddingHorizontal: 32 }}>
       <Text
         style={{
           color: colors.onboardingTitle,
@@ -37,8 +32,8 @@ const Body = ({ index }: { index: number }) => {
         {t(`onboarding_step_${index}_body`)}
       </Text>
     </View>
-  )
-}
+  );
+};
 
 export const ExplainerSlide = ({
   index,
@@ -49,7 +44,7 @@ export const ExplainerSlide = ({
   setIndex: (index: number) => void;
   onSkip: () => void;
 }) => {
-  const colors = useColors()
+  const colors = useColors();
 
   return (
     <>
@@ -82,34 +77,15 @@ export const ExplainerSlide = ({
             }} />
         </Animated.View>
       </View>
-      <View
-        style={{
-          flex: 1,
-        }}
-      >
-        <View
-          style={{
-            flex: 1,
-          }}
-        >
+      <View style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
           <HeaderNavigation onSkip={onSkip} index={index} setIndex={setIndex} />
-          <Animated.View
-            style={{
-              flex: 1,
-            }}
-            entering={FadeIn.duration(800)}
-          >
+          <Animated.View style={{ flex: 1 }} entering={FadeIn.duration(800)}>
             <Body index={index} />
           </Animated.View>
         </View>
-        <View
-          style={{
-            padding: 32,
-          }}
-        >
-          <Button
-            onPress={() => setIndex(index + 1)}
-          >{t('onboarding_next')}</Button>
+        <View style={{ padding: 32 }}>
+          <Button onPress={() => setIndex(index + 1)}>{t('onboarding_next')}</Button>
         </View>
       </View>
     </>

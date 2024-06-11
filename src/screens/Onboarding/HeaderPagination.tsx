@@ -29,6 +29,8 @@ export const HeaderPagination = ({ index }: { index: number; }) => {
       <HeaderPaginationDot active={index === 2} />
       <HeaderPaginationDot active={index === 3} />
       <HeaderPaginationDot active={index === 4} />
+      {/* <HeaderPaginationDot active={index === 5} /> */}
+
     </View>
   );
 };
