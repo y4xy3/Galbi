@@ -9,14 +9,19 @@ import { YLabels } from './YLabels';
 import Purchases, { PurchasesPackage, PurchasesOffering, CustomerInfo } from 'react-native-purchases';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { BlurView } from 'expo-blur';
+import { useNavigation } from '@react-navigation/native';  // Import navigation
+
 
 const API_KEY = 'goog_BpyKiDExoUdGYxVfSwMNzyRGlsd';
 const PRODUCT_ID = 'com.mindracer.galbi.yearly:yearly-subs1';
+const PRODUCT_ID_2 = 'com.mindracer.sub_1:subs-1'
 
 export const SleepQualityChart = ({ data, height, width, showAverage = false }) => {
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [currentOffering, setCurrentOffering] = useState<PurchasesOffering | null>(null);
   const colors = useColors();
+  const navigation = useNavigation();  // Initialize navigation
+
 
   useEffect(() => {
     const configureRevenueCat = async () => {
@@ -29,8 +34,13 @@ export const SleepQualityChart = ({ data, height, width, showAverage = false }) 
         // console.log(offerings.all['nightChart'])
 
         const customerInfo: CustomerInfo = await Purchases.getCustomerInfo();
-        const isActive = customerInfo.activeSubscriptions.includes(PRODUCT_ID);
-        setIsUnlocked(isActive);
+
+        if (customerInfo.activeSubscriptions.includes(PRODUCT_ID) || customerInfo.activeSubscriptions.includes(PRODUCT_ID_2) !== false) {
+        setIsUnlocked(true);
+          
+        }
+        // console.log(isActive)
+        // setIsUnlocked(isActive);
       } catch (error) {
         console.warn(error);
       }
@@ -41,13 +51,20 @@ export const SleepQualityChart = ({ data, height, width, showAverage = false }) 
 
   const handlePurchase = async () => {
     try {
-      if (currentOffering && currentOffering.availablePackages.length > 0) {
-        const packageToPurchase = currentOffering.availablePackages[0];
+
         // console.log(packageToPurchase)
-        const { customerInfo } = await Purchases.purchasePackage(packageToPurchase);
-        const isActive = customerInfo.activeSubscriptions.includes(PRODUCT_ID);
-        setIsUnlocked(isActive);
-      }
+        const customerInfo: CustomerInfo = await Purchases.getCustomerInfo();
+        if (customerInfo.activeSubscriptions.includes(PRODUCT_ID) || customerInfo.activeSubscriptions.includes(PRODUCT_ID_2) !== false) {
+          setIsUnlocked(true);
+            
+          }else{
+            navigation.navigate('SubscriptionSlide');
+
+          }
+
+        // const isActive = customerInfo.activeSubscriptions.includes(PRODUCT_ID);
+        // setIsUnlocked(isActive);
+      
     } catch (error) {
       console.warn(error);
     }

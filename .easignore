@@ -1,0 +1,4 @@
+.easignore
+.vscode
+.github
+.build

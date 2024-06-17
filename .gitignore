@@ -23,9 +23,11 @@ scripts/preview-templates/*
 scripts/preview-generated/*
 scripts/data/*
 
+.build/
 build-*.apk
 build-*.ipa
 build-*.aab
+
 
 /*.app
 /*.tar.gz

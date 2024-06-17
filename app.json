@@ -2,7 +2,7 @@
   "expo": {
     "name": "Galbi",
     "slug": "Galbi",
-    "version": "2.1.2",
+    "version": "3.3.3",
     "orientation": "portrait",
     "icon": "./assets/images/icon1.png",
     "scheme": "pixy",
@@ -31,13 +31,13 @@
       }
     },
     "android": {
+      "versionCode": 680018600,
       "package": "com.mindracer.galbi",
-      "versionCode": 3,
       "allowBackup": false,
       "permissions": [],
-      "icon": "./assets/images/icon.png",
+      "icon": "./assets/images/icon1.png",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/icon1.png",
         "backgroundColor": "#ffffff"
       }
     },

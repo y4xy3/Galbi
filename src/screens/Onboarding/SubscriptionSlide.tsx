@@ -40,13 +40,14 @@ const SubscriptionSlide: React.FC<SubscriptionSlideProps> = ({ onFinish }) => {
         let packageToPurchase;
         if (selectedPlan === 'yearly') {
           packageToPurchase = offerings.all['yearlySubscription'].availablePackages[0];
-          console.log(packageToPurchase)
          } else if (selectedPlan === 'monthly') {
           packageToPurchase = offerings.all['monthlySubs'].availablePackages[0];
+          // console.log(packageToPurchase)
+
         }
         if (packageToPurchase) {
           const purchaseResult = await Purchases.purchasePackage(packageToPurchase);
-          if (purchaseResult.customerInfo.entitlements.active['monthlySubs'] || purchaseResult.customerInfo.entitlements.active['yearlySubscription']) {
+          if (purchaseResult.customerInfo.entitlements.active['monthlySubs'] || purchaseResult.customerInfo.entitlements.active['yearlySubscription'] != undefined) {
             onFinish();
           }
         }

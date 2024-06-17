@@ -15,8 +15,8 @@ import { useSettings } from '../hooks/useSettings';
 import Purchases, { PurchasesPackage, PurchasesOffering } from 'react-native-purchases';
 
 const API_KEY = 'goog_BpyKiDExoUdGYxVfSwMNzyRGlsd';
-const OFFERING_ID = 'yearlySubscription';
-
+const OFFERING_ID_yearly = 'yearlySubscription';
+const offering_id_monthly = 'monthlySubs'
 export const StepsScreen = ({ navigation }: RootStackScreenProps<'Steps'>) => {
   const colors = useColors();
   const { settings, setSettings } = useSettings();
@@ -32,7 +32,10 @@ export const StepsScreen = ({ navigation }: RootStackScreenProps<'Steps'>) => {
     const checkPremiumStatus = async () => {
       try {
         const customerInfo = await Purchases.getCustomerInfo();
-        setIsPremium(customerInfo.entitlements.active[OFFERING_ID || 'monthlySubs']  !== undefined);
+        if (customerInfo.entitlements.active[OFFERING_ID_yearly] || customerInfo.entitlements.active[offering_id_monthly]  !== undefined) {
+          setIsPremium(true);
+
+        }
       } catch (e) {
         console.error("Failed to fetch customer info:", e);
       }
@@ -48,29 +51,29 @@ export const StepsScreen = ({ navigation }: RootStackScreenProps<'Steps'>) => {
     }
   }, [isPremium]);
 
-  const handlePurchase = async () => {
-    try {
-      const offerings = await Purchases.getOfferings();
-      const currentOffering: PurchasesOffering | null = offerings.current;
+  // const handlePurchase = async () => {
+  //   try {
+  //     const offerings = await Purchases.getOfferings();
+  //     const currentOffering: PurchasesOffering | null = offerings.current;
 
-      if (currentOffering && currentOffering.availablePackages.length > 0) {
-        const purchasePackage: PurchasesPackage | undefined = currentOffering.availablePackages.find(pkg => pkg.identifier === OFFERING_ID);
+  //     if (currentOffering && currentOffering.availablePackages.length > 0) {
+  //       const purchasePackage: PurchasesPackage | undefined = currentOffering.availablePackages.find(pkg => pkg.identifier === OFFERING_ID);
 
-        if (purchasePackage) {
-          const purchaseInfo = await Purchases.purchasePackage(purchasePackage);
-          if (purchaseInfo.customerInfo.entitlements.active[OFFERING_ID]) {
-            setIsPremium(true);
-            setSettings(settings => ({
-              ...settings,
-              steps: [...settings.steps, 'sleep'] as LoggerStep[]
-            }));
-          }
-        }
-      }
-    } catch (e) {
-      console.error("Purchase failed:", e);
-    }
-  };
+  //       if (purchasePackage) {
+  //         const purchaseInfo = await Purchases.purchasePackage(purchasePackage);
+  //         if (purchaseInfo.customerInfo.entitlements.active[OFFERING_ID]) {
+  //           setIsPremium(true);
+  //           setSettings(settings => ({
+  //             ...settings,
+  //             steps: [...settings.steps, 'sleep'] as LoggerStep[]
+  //           }));
+  //         }
+  //       }
+  //     }
+  //   } catch (e) {
+  //     console.error("Purchase failed:", e);
+  //   }
+  // };
 
   const handleSleepSwitch = () => {
     // console.log("Handling sleep switch");
